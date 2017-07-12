@@ -1,0 +1,84 @@
+/*
+Theme Name: Mova Video
+Theme URI: https://teste.com/movaVideo
+Author: Ana Paula Fernandes de Souza.
+Author URI: https://teste.com/
+Description: Tema criado no curso de WordPress com  Bootstrap bye:Atunes Romos Videos
+Version: 1.0;
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: videos,mova,recife
+Text Domain: MovaVideo.
+*/
+
+
+/*body h1{color: #fff; background:#900;}*/
+
+/*Mudando a letra */
+body{font-family:'PT sans',sans-serif;}
+
+/*Header*/
+.header{background: #eee;border-top:3px solid #222;padding: 22px 0;}
+.logo{}
+
+/*Menu de navegação*/
+.navbar{margin: 18px 0;text-size:15px;}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #fff;
+  background-color: #900;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #900;
+  background-color: transparent;
+}
+
+/*Slider */ 
+.slider-noticia{margin-top:30px}
+
+/*Itens do lado do Slider*/
+.itens-destaques{margin-top:30px}
+
+/*Caixa : Mais Visto em vermelho e caixa alta*/
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  color: #fff;
+  cursor: default;
+  background-color: #900;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+  text-transform:uppercase;
+}
+/*Boxes futebol e luta */
+
+.width-full-box{background: #069; padding:30px 0;margin : 30px 0}
+.title-box h4 {background:#185572; text-transform: uppercase;color:#fff;padding: 10px; border-bottom: 3px solid #269abc;border-radius: 5px}
+.iten-futebol span{text-transform: uppercase ; color:#fff; font-weight:bold; font-size:12px; padding:10px 0;display:inline-block}
+.iten-futebol h1{margin:0; font-size: 18px; font-weight: bold}
+.iten-futebol h1 a {color: #fff;}
+
+/*Luta*/
+
+.luta h4 {background: #E5DA39; border-bottom: 3px solid #C9BE2C;color:#222}
+
+/*Parte dos games */
+
+#posts-games{}
+
+/*Modificações feitas no boot.*/
+
+.media-heading {font-size: 18px;font-weight: bold}
+
+/*footer*/
+
+.footer{margin-top: 45px }
+.footer .title-box h4 {background: #55b855; border-bottom: 3px solid rgba(19, 183, 6, 0.26)}
+.footer-copy{background: #55b855;padding:10px 0 ;color: #fff; margin-top: 45px }
+
+/*Minha Conta*/
+
+.minha-conta li{list-style: none;}
+.minha-conta h2 {text-transform: uppercase;color:#900;font-size:18px;}
