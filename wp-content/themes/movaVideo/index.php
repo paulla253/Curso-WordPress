@@ -17,7 +17,7 @@
 
                     <?php
                         $posts_slides = new WP_Query(array(
-                            'post_type' => 'post',
+	                        'category_name' => 'destaques',
                             'posts_per_page' => 3
                         ));
                         $i = 1;
@@ -25,7 +25,7 @@
                     ?>
 
 						<div class="item <?php if($i == 1) echo 'active'; ?>">
-                            <?php the_post_thumbnail('thumbnail-slide'); ?>
+                            <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('thumbnail-slide'); ?></a>
 						  <div class="carousel-caption visible-lg">
 								<div class="carousel-caption visible-lg">
                                     <h3><?php the_title(); ?></h3>
@@ -127,56 +127,59 @@
 		</div>
 	</div>
 	<!--fim dos destaques -->
-	
-	<div class="width-full-box"> 
-	
-		<div class="container">
-			<div class="row">
-			
-				<div class="title-box">
 
+    <div class="width-full-box">
+        <div class="container">
+
+            <div class="row">
+                <div class="title-box">
                     <div class="col-md-9"><h4>Por dentro dos campos</h4></div>
-                    <div class="col-md-3 visible-lg luta"><h4>Lutas</h4></div>
-				</div>
-			
-			</div>
-			
-			<div class="row">
-			
-				<div class="col-md-3 iten-futebol">
-					
-					<a href=""><img class="img-responsive img-thumbnail " src="http://via.placeholder.com/370x220" alt="" title=""></a>  			  
-					<span>Campo extra</span>
-                    <h1><a href="" >Titulo do post para a categoria futebol</a></h1>
-				</div>
-
-                <div class="col-md-3 iten-futebol">
-
-                    <a href=""><img class="img-responsive img-thumbnail " src="http://via.placeholder.com/370x220" alt="" title=""></a>
-                    <span>Campo extra</span>
-                    <h1><a href="" >Titulo do post para a categoria futebol</a></h1>
+                    <div class="col-md-3 luta visible-lg"><h4>Lutas</h4></div>
                 </div>
+            </div>
 
-                <div class="col-md-3 iten-futebol">
+            <div class="row">
 
-                    <a href=""><img class="img-responsive img-thumbnail " src="http://via.placeholder.com/370x220" alt="" title=""></a>
-                    <span>Campo extra</span>
-                    <h1><a href="" >Titulo do post para a categoria futebol</a></h1>
-                </div>
+                <!--/box futebol-->
+				<?php
+				$posts_slides = new WP_Query(array(
+					'category_name' => 'futebol',
+					'posts_per_page' => 3
+				));
 
-                <div class="col-md-3 iten-futebol luta ">
-                    <div class="title-box visible-xs">
-                        <h4>Lutas</h4>
+				while($posts_slides->have_posts()) : $posts_slides->the_post();
+					?>
+                    <div class="col-md-3 iten-futebol">
+                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('img-futebol', array('class' => 'img-responsive img-thumbnail')); ?></a>
+                        <span><?php echo rwmb_meta('subtitulo'); ?></span>
+                        <h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
                     </div>
+				<?php endwhile; wp_reset_postdata(); ?>
+                <!--/fim box futebol-->
 
-                    <a href=""><img class="img-responsive img-thumbnail " src="http://via.placeholder.com/370x220" alt="" title=""></a>
-                    <span>Campo extra</span>
-                    <h1><a href="" >Titulo do post para a categoria futebol</a></h1>
-                </div>
-				
-			</div>
-		</div>
-	</div>
+                <!--luta-->
+				<?php
+				$posts_slides = new WP_Query(array(
+					'category_name' => 'lutas',
+					'posts_per_page' => 1
+				));
+
+				while($posts_slides->have_posts()) : $posts_slides->the_post();
+					?>
+                    <div class="col-md-3 iten-futebol luta pull-right">
+                        <div class="title-box visible-xs"><h4>Lutas</h4></div>
+                        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('img-futebol', array('class' => 'img-responsive img-thumbnail')); ?></a>
+                        <span><?php echo rwmb_meta('subtitulo'); ?></span>
+                        <h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+                    </div>
+				<?php endwhile; wp_reset_postdata(); ?>
+                <!--/fim luta-->
+
+            </div>
+
+        </div>
+    </div>
+
 	<!-- fim width-full-box -->
 
     <div class="container">
@@ -189,40 +192,59 @@
 
         <div class="row">
             <div class="col-md-7" id="posts-games">
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-responsive img-thumbnail" src="http://via.placeholder.com/200x110" alt="...">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h1 class="media-heading"><a href="" >Titulo do post para a categoria gemes</a></h1>
-                        <button type="button" class="btn btn-primary btn-xs">Campo extra</button>
-                        <p class="visible-lg">Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos</p>
-                    </div>
-                </div>
 
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-responsive img-thumbnail" src="http://via.placeholder.com/200x110" alt="...">
-                        </a>
+                <!--games-->
+			    <?php
+			    $posts_slides = new WP_Query(array(
+				    'category_name' => 'games',
+				    'posts_per_page' => 3
+			    ));
+
+			    while($posts_slides->have_posts()) : $posts_slides->the_post();
+				    ?>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('img-games', array('class' => 'media-object img-responsive img-thumbnail')); ?></a>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h1 class="media-heading"><a href=""><?php the_title(); ?></a></h1>
+                            <button type="button" class="btn btn-primary btn-xs"><?php echo rwmb_meta('subtitulo'); ?></button>
+                            <p class="visible-lg"><?php echo rwmb_meta('resumo'); ?></p>
+                        </div>
                     </div>
-                    <div class="media-body">
-                        <h1 class="media-heading"><a href="">Titulo do post para a categoria gemes</a></h1>
-                        <button type="button" class="btn btn-primary btn-xs">Campo extra</button>
-                        <p class="visible-lg">Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos</p>
-                    </div>
-                </div>
+			    <?php endwhile; wp_reset_postdata(); ?>
+                <!--/fim games-->
+
             </div>
-            <!--Fim do id posts-games-->
+            <!--/posts-games-->
+
+            <!--/video-->
             <div class="col-md-5" id="videos-home">
                 <div class="title-box visible-xs"><h4>Vídeos da semana</h4></div>
+
+             <?php
+                $posts_slides = new WP_Query(array(
+                    'category_name' => 'videos',
+                    'posts_per_page' => 1
+                ));
+
+                while($posts_slides->have_posts()) : $posts_slides->the_post();
+             ?>
+
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/FgC8XW_2wIM?list=PLGoNvruYZ-YzvMOv2YrK3_zaXejHYc5zJ?ecver=2"></iframe>
+
+                    <?php echo rwmb_meta('oembed','type=oembed'); ?>
+                    </div>
+                    <h1><?php the_title(); ?></h1>
+                    <button type="button" class="btn btn-primary btn-xs"><?php echo rwmb_meta('subtitulo'); ?></button>
+                    <p><?php echo rwmb_meta('resumo'); ?></p>
+
                 </div>
+                <?php endwhile; wp_reset_postdata(); ?>
             </div>
-            <!--Fim do id posts-homes-->
+            <!--Fim video -->
         </div>
     </div>
 <?php get_footer();?>

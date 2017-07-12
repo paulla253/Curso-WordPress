@@ -82,3 +82,13 @@ body{font-family:'PT sans',sans-serif;}
 
 .minha-conta li{list-style: none;}
 .minha-conta h2 {text-transform: uppercase;color:#900;font-size:18px;}
+
+/*Video */
+
+#videos-home h1 {font-size:20px;text-transform: uppercase;color: #900}
+
+/*Rodape*/
+
+.sobre-rodape{list-style: none}
+.sobre-rodape h2 {font-size:19px ; color:#069}
+.instagram {list-style: none}

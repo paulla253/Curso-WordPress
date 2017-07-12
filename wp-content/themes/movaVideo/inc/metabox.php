@@ -16,6 +16,14 @@ function your_prefix_meta_boxes( $meta_boxes ) {
 				'name' => __( 'Resumo', 'textdomain' ),
 				'type' => 'textarea',
 			),
+
+			// Video
+			array(
+				'name' => esc_html__( 'Video do Youtube', 'your-prefix' ),
+				'id'   => "{$prefix}oembed",
+				'desc' => esc_html__( 'URL do video', 'your-prefix' ),
+				'type' => 'oembed',
+			),
 		),
 	);
 	return $meta_boxes;

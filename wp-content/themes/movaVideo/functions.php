@@ -17,6 +17,11 @@ register_nav_menus( array(
     'primary' => __( 'Menu Principal', 'movaVideo' ),
 ) );
 
+// Links úteis rodape
+register_nav_menus( array(
+	'links-uteis' => __( 'Links Úteis', 'movaVideo' ),
+) );
+
 //Registro do sidebar(id->sempre unicas).
 if ( function_exists('register_sidebar') ) {
 	register_sidebar( array(
@@ -31,6 +36,22 @@ if ( function_exists('register_sidebar') ) {
 		'name' => __( 'Regras do Portal'),
 		'id' => 'sidebar-regras',
 		'description' => __( 'Informações sobre regras do portal.'),
+		'before_title' => '<h2>',
+		'after_title' => '</h2>',
+	) );
+
+	register_sidebar(array(
+		'name' => __( 'Sobre Nós Rodape'),
+		'id' => 'sobre-nos-rodape',
+		'description' => __( 'Um pouco sobre o blog'),
+		'before_title' => '<h2>',
+		'after_title' => '</h2>',
+	) );
+
+	register_sidebar(array(
+		'name' => __( 'Instagram'),
+		'id' => 'instagram-rodape',
+		'description' => __( 'Link do instagram'),
 		'before_title' => '<h2>',
 		'after_title' => '</h2>',
 	) );
