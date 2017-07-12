@@ -63,63 +63,38 @@
 				  <div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="maisvistos">					
 						<ul class="list-group">
-						  <li class="list-group-item">
-							<span class="badge">1</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">2</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">3</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">4</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">5</span>
-							Cras justo odio
-						  </li>				
-						</ul>				
+
+                            <!-- Chamada do plugn WP-PostViews -->
+							<?php if (function_exists('get_most_viewed')): ?>
+								<?php get_most_viewed('post',5); ?>
+							<?php endif; ?>
+
+                        </ul>
 					</div>
 		
 					<!--Conteudo para parecer no id mais comentados -->
-					<div role="tabpanel" class="tab-pane" id="maiscomentados">
-					
-						<ul class="list-group">
-						  <li class="list-group-item">
-							<span class="badge">14</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">25</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">34</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">44</span>
-							Cras justo odio
-						  </li>
-						  
-						  <li class="list-group-item">
-							<span class="badge">7</span>
-							Cras justo odio
-						  </li>				
-						</ul>				
-					</div>
+                      <div role="tabpanel" class="tab-pane" id="maiscomentados">
+
+                          <ul class="list-group">
+
+							  <?php $result = $wpdb->get_results("SELECT comment_count,ID,post_title FROM $wpdb->posts ORDER BY comment_count DESC LIMIT 0 , 5 ");
+							  foreach($result as $post){
+								  setup_postdata($post);
+								  $postid = $post->ID;
+								  $title = $post->post_title;
+								  $commentcount = $post->comment_count;
+								  if($commentcount != 0){?>
+
+                                      <li class="list-group-item">
+                                          <span class="badge"><?php echo $commentcount;?></span>
+                                          <a href="<?php the_permalink(); ?>"><?php echo $title; ?></a>
+                                      </li>
+								  <?php }?>
+							  <?php }?>
+
+                          </ul>
+
+                      </div>
 				  </div>
 				<!-- Imagem do espaço que sobrou -->	
 				<a href=""><img class="img-responsive img-thumbnail " src="http://via.placeholder.com/370x130" alt="" title=""></a>  			  
