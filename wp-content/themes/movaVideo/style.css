@@ -21,6 +21,10 @@ body{font-family:'PT sans',sans-serif;}
 .header{background: #eee;border-top:3px solid #222;padding: 22px 0;}
 .logo{}
 
+/* menu */
+.menu-site{background: #333;}
+
+
 /*Menu de navegação*/
 .navbar{margin: 18px 0;text-size:15px;}
 .navbar-default .navbar-nav > .active > a,
@@ -35,7 +39,7 @@ body{font-family:'PT sans',sans-serif;}
   background-color: transparent;
 }
 
-/*Slider */ 
+/*Slider */
 .slider-noticia{margin-top:30px}
 
 /*Itens do lado do Slider*/
@@ -92,3 +96,66 @@ body{font-family:'PT sans',sans-serif;}
 .sobre-rodape{list-style: none}
 .sobre-rodape h2 {font-size:19px ; color:#069}
 .instagram {list-style: none}
+
+/*Single Post */
+/* Single/posts */
+.single{padding: 40px 0;}
+img.alignright {float:right; margin:0 0 1em 1em}
+img.alignleft {float:left; margin:0 1em 1em 0}
+img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+a img.alignright {float:right; margin:0 0 1em 1em}
+a img.alignleft {float:left; margin:0 1em 1em 0}
+a img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+.conteudo-single p{font-size: 16px;color: #555;}
+.conteudo-single img{display: block;max-width: 100%;height: auto;}
+.conteudo-single h1{font-weight: 700;color:#900;text-transform: uppercase;}
+.conteudo-single h2{font-weight: 700;color: #069;}
+.conteudo-single h3{font-weight: 700;color: #518C55;}
+.conteudo-single h4{color: #900;}
+.conteudo-single h5{color: #900;}
+.conteudo-single h6{color: #900;}
+.conteudo-single ul{list-style: none;margin: 0;padding: 0;}
+.conteudo-single ul li{padding: 10px 0;text-transform: uppercase;color: #358;}
+.conteudo-single ol{margin: 0;padding: 14px;}
+.conteudo-single ol li{padding: 10px 0;text-transform: uppercase;color: #000;}
+.conteudo-single blockquote{background: #eee;padding: 20px;border-radius: 6px;color: #fff;border-left:4px solid #900;}
+
+/* Sidebar */
+.sidebar{}
+.widget{list-style: none;}
+.widget h2{font-weight: 700;text-transform: uppercase;font-size: 18px;color: #518C55;}
+.widget ul{margin: 0;padding: 0;list-style: none;}
+.widget ul li{padding: 10px 0;}
+.widget p {color: #111;font-size: 15px;}
+
+/* page */
+.page{padding: 40px 0;}
+.conteudo-page p{font-size: 16px;color: #555;}
+.conteudo-page img{display: block;max-width: 100%;height: auto;}
+.conteudo-page h1{font-weight: 700;color:#fff;text-transform: uppercase;background: #096;padding: 8px;border-radius: 6px;}
+.conteudo-page h2{font-weight: 700;color: #069;}
+.conteudo-page h3{font-weight: 700;color: #518C55;}
+.conteudo-page h4{color: #900;}
+.conteudo-page h5{color: #900;}
+.conteudo-page h6{color: #900;}
+.conteudo-page ul{list-style: none;margin: 0;padding: 0;}
+.conteudo-page ul li{padding: 10px 0;text-transform: uppercase;color: #358;}
+.conteudo-page ol{margin: 0;padding: 14px;}
+.conteudo-page ol li{padding: 10px 0;text-transform: uppercase;color: #000;}
+.conteudo-page blockquote{background: #eee;padding: 20px;border-radius: 6px;color: #fff;border-left:4px solid #900;}
+
+/* categoria */
+.conteudo-categoria{}
+.conteudo-categoria h4{margin-bottom: 20px;padding: 30px;text-transform: uppercase;color:#900;border-radius: 6px;}
+
+/* PÁGINAÇÃO WORDPRESS */
+.page-numbers {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 0 2px 0 0;
+  border: 1px solid #eee;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: 2px;
+  font-weight: 600;
+}

@@ -56,4 +56,37 @@ if ( function_exists('register_sidebar') ) {
 		'after_title' => '</h2>',
 	) );
 
+    register_sidebar(array(
+        'name' => __( 'Sidebar'),
+        'id' => 'sidebar-internas',
+        'description' => __( 'Elementos da sidebar single e page'),
+        'before_title' => '<h2>',
+        'after_title' => '</h2>',
+    ) );
+
+    // GALERIA DE IMAGENS
+    /**
+     * Add title back to images
+     */
+    function pexeto_add_title_to_attachment( $markup, $id ){
+        $att = get_post( $id );
+        return str_replace('<a ', '<a title="'.$att->post_title.'" ', $markup);
+    }
+    add_filter('wp_get_attachment_link', 'pexeto_add_title_to_attachment', 10, 5);
+
+
+    /* PAGINAÇÃO WORDPRESS */
+    function wordpress_pagination() {
+        global $wp_query;
+
+        $big = 999999999;
+
+        echo paginate_links( array(
+            'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+            'format' => '?paged=%#%',
+            'current' => max( 1, get_query_var('paged') ),
+            'total' => $wp_query->max_num_pages
+        ) );
+    }
+
 }
