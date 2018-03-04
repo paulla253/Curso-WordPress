@@ -49,19 +49,34 @@ class RW_Meta_Box {
 	 * @param array $meta_box Meta box definition.
 	 */
 	public function __construct( $meta_box ) {
+		$meta_box = self::normalize( $meta_box );
+		$this->meta_box = $meta_box;
+
 		$storage = $this->get_storage();
 		if ( ! $storage ) {
 			return;
 		}
 
-		$meta_box           = self::normalize( $meta_box );
-		$meta_box['fields'] = self::normalize_fields( $meta_box['fields'], $storage );
+		$this->meta_box['fields'] = self::normalize_fields( $meta_box['fields'], $storage );
 
-		$this->meta_box = $meta_box;
+		$this->meta_box = apply_filters( 'rwmb_meta_box_settings', $this->meta_box );
 
 		if ( $this->is_shown() ) {
 			$this->global_hooks();
 			$this->object_hooks();
+		}
+	}
+
+	/**
+	 * Add fields to field registry.
+	 */
+	public function register_fields() {
+		$field_registry = rwmb_get_registry( 'field' );
+
+		foreach ( $this->post_types as $post_type ) {
+			foreach ( $this->fields as $field ) {
+				$field_registry->add( $field, $post_type );
+			}
 		}
 	}
 
@@ -129,6 +144,10 @@ class RW_Meta_Box {
 			wp_enqueue_style( 'rwmb-rtl', RWMB_CSS_URL . 'style-rtl.css', array(), RWMB_VER );
 		}
 
+		if ( 'seamless' === $this->style ) {
+			wp_enqueue_script( 'rwmb', RWMB_JS_URL . 'script.js', array( 'jquery' ), RWMB_VER, true );
+		}
+
 		// Load clone script conditionally.
 		foreach ( $this->fields as $field ) {
 			if ( $field['clone'] ) {
@@ -191,12 +210,13 @@ class RW_Meta_Box {
 	 * Callback function to show fields in meta box
 	 */
 	public function show() {
-		$this->set_object_id();
+		$this->set_object_id( $this->get_current_object_id() );
 		$saved = $this->is_saved();
 
 		// Container.
 		printf(
-			'<div class="rwmb-meta-box" data-autosave="%s" data-object-type="%s">',
+			'<div class="rwmb-meta-box%s" data-autosave="%s" data-object-type="%s">',
+			esc_attr( 'seamless' === $this->style ? ' rwmb-meta-box--seamless' : '' ),
 			esc_attr( $this->autosave ? 'true' : 'false' ),
 			esc_attr( $this->object_type )
 		);
@@ -235,9 +255,11 @@ class RW_Meta_Box {
 		$this->saved = true;
 
 		// Make sure meta is added to the post, not a revision.
-		$the_post = wp_is_post_revision( $post_id );
-		if ( $the_post ) {
-			$post_id = $the_post;
+		if ( 'post' === $this->object_type ) {
+			$the_post = wp_is_post_revision( $post_id );
+			if ( $the_post ) {
+				$post_id = $the_post;
+			}
 		}
 
 		// Before save action.
@@ -289,8 +311,7 @@ class RW_Meta_Box {
 	public function validate() {
 		$nonce = filter_input( INPUT_POST, "nonce_{$this->id}", FILTER_SANITIZE_STRING );
 
-		return
-			! $this->saved
+		return ! $this->saved
 			&& ( ! defined( 'DOING_AUTOSAVE' ) || $this->autosave )
 			&& wp_verify_nonce( $nonce, "rwmb-save-{$this->id}" );
 	}
@@ -311,6 +332,7 @@ class RW_Meta_Box {
 			'post_types'     => 'post',
 			'autosave'       => false,
 			'default_hidden' => false,
+			'style'          => 'default',
 		) );
 
 		/**
@@ -412,7 +434,7 @@ class RW_Meta_Box {
 	 */
 	public function set_object_id( $id = null ) {
 		if ( null === $this->object_id ) {
-			$this->object_id = null === $id ? get_the_ID() : $id;
+			$this->object_id = $id;
 		}
 	}
 
@@ -430,7 +452,16 @@ class RW_Meta_Box {
 	 *
 	 * @return RWMB_Storage_Interface
 	 */
-	protected function get_storage() {
-		return rwmb_get_storage( $this->object_type );
+	public function get_storage() {
+		return rwmb_get_storage( $this->object_type, $this );
+	}
+
+	/**
+	 * Get current object id.
+	 *
+	 * @return int|string
+	 */
+	protected function get_current_object_id() {
+		return get_the_ID();
 	}
 }

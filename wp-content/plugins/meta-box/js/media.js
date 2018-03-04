@@ -31,13 +31,13 @@ jQuery( function ( $ ) {
 			if ( max > 0 && left <= 0 ) {
 				return this;
 			}
-
-			if ( ! models.hasOwnProperty( 'length' ) ) {
-				models = [models];
-			} else if ( models instanceof media.model.Attachments ) {
-				models = models.models;
+			if( models) {
+				if ( ! models.hasOwnProperty( 'length' ) ) {
+					models = [models];
+				} else if ( models instanceof media.model.Attachments ) {
+					models = models.models;
+				}
 			}
-
 			if ( left > 0 ) {
 				models = _.difference( models, this.models );
 				models = _.first( models, left );
@@ -118,15 +118,22 @@ jQuery( function ( $ ) {
 	 * Sets up media field view and subviews
 	 */
 	MediaField = views.MediaField = Backbone.View.extend( {
+		className: 'rwmb-media-view',
 		initialize: function ( options ) {
-			var that = this;
+			var that = this,
+				fieldName = options.input.name;
 			this.$input = $( options.input );
+
+			if ( 1 != this.$input.attr( 'data-single-image' ) ) {
+				fieldName += '[]';
+			}
+
 			this.controller = new Controller( _.extend(
 				{
-					fieldName: this.$input.attr( 'name' ) + '[]',
+					fieldName: fieldName,
 					ids: this.$input.val().split( ',' )
 				},
-				this.$el.data( 'options' )
+				this.$input.data( 'options' )
 			) );
 
 			// Create views
@@ -142,7 +149,11 @@ jQuery( function ( $ ) {
 
 			// Listen for destroy event on input
 			this.$input.on( 'remove', function () {
-				this.controller.destroy();
+				that.controller.destroy();
+			} );
+
+			this.$input.on( 'media:reset', function() {
+				that.controller.get( 'items' ).reset();
 			} );
 
 			this.controller.get( 'items' ).on( 'add remove reset', _.debounce( function () {
@@ -208,6 +219,7 @@ jQuery( function ( $ ) {
 
 			this.listenTo( this.collection, 'add', this.addItemView );
 			this.listenTo( this.collection, 'remove', this.removeItemView );
+			this.listenTo( this.collection, 'reset', this.resetItemViews );
 
 			// Sort media using sortable
 			this.initSortable();
@@ -242,6 +254,16 @@ jQuery( function ( $ ) {
 
 		removeItem: function ( item ) {
 			this.collection.remove( item );
+		},
+
+		resetItemViews: function( items, options ){
+			var that = this;
+			_.each( options.previousModels, function( item ){
+				 that.removeItemView( item );
+			 } );
+			items.each( function( item ) {
+				that.addItemView( item );
+			} );
 		},
 
 		switchItem: function ( item ) {
@@ -304,20 +326,12 @@ jQuery( function ( $ ) {
 		initSortable: function () {
 			var collection = this.controller.get( 'items' );
 			this.$el.sortable( {
-				// Change the position of the attachment as soon as the
-				// mouse pointer overlaps a thumbnail.
-				tolerance: 'pointer',
+				// Clone the element and the clone will be dragged. Prevent trigger click on the image, which means reselect.
+				helper : 'clone',
 
 				// Record the initial `index` of the dragged model.
 				start: function ( event, ui ) {
 					ui.item.data( 'sortableIndexStart', ui.item.index() );
-				},
-
-				// Stop trigger 'click' on item. 'click' means reselect.
-				stop: function ( event ) {
-					$( event.originalEvent.target ).one( 'click', function ( e ) {
-						e.stopImmediatePropagation();
-					} );
 				},
 
 				// Update the model's index in the collection.
@@ -361,6 +375,7 @@ jQuery( function ( $ ) {
 
 			// Re-render if changes happen in controller
 			this.listenTo( this.controller.get( 'items' ), 'update', this.render );
+			this.listenTo( this.controller.get( 'items' ), 'reset', this.render );
 
 			// Render
 			this.render();
@@ -591,7 +606,10 @@ jQuery( function ( $ ) {
 	 * @return void
 	 */
 	function initMediaField() {
-		new MediaField( {input: this, el: $( this ).siblings( 'div.rwmb-media-view' )} );
+		var view = new MediaField( { input: this } );
+		//Remove old then add new
+		$( this ).siblings( 'div.rwmb-media-view' ).remove();
+		$( this ).after( view.el );
 	}
 
 	$( '.rwmb-file_advanced' ).each( initMediaField );

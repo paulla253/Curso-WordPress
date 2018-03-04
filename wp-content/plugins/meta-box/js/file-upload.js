@@ -179,10 +179,12 @@ jQuery( function ( $ ) {
 	 * @return void
 	 */
 	function init() {
-		new FileUploadField( {input: this, el: $( this ).siblings( 'div.rwmb-media-view' )} );
+		var view = new FileUploadField( { input: this } );
+		//Remove old then add new
+		$( this ).siblings( 'div.rwmb-media-view' ).remove();
+		$( this ).after( view.el );
 	}
 
-	$( ':input.rwmb-file_upload' ).each( init );
-	$( '.rwmb-input' )
-		.on( 'clone', ':input.rwmb-file_upload', init )
+	$( '.rwmb-file_upload' ).each( init );
+	$( document ).on( 'clone', '.rwmb-file_upload', init )
 } );

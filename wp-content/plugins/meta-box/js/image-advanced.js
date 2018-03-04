@@ -29,9 +29,19 @@ jQuery( function ( $ ) {
 	 * Initialize image fields
 	 */
 	function initImageField() {
-		new ImageField( {input: this, el: $( this ).siblings( 'div.rwmb-media-view' )} );
+		var view = new ImageField( { input: this } );
+		$( this ).after( view.el );
 	}
 
-	$( 'input.rwmb-image_advanced' ).each( initImageField );
-	$( document ).on( 'clone', 'input.rwmb-image_advanced', initImageField )
+	/**
+	 * Remove views for uploaded images.
+	 */
+	function removeView() {
+		$( this ).siblings( '.rwmb-media-view' ).remove();
+	}
+
+	$( '.rwmb-image_advanced' ).each( initImageField );
+	$( document )
+		.on( 'clone', '.rwmb-image_advanced', removeView )
+		.on( 'after_clone', '.rwmb-image_advanced', initImageField );
 } );
